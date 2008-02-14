@@ -1,4 +1,4 @@
-h1. drnic_js_test_helpers
+h1. Dr Nic's JavaScript Test Helpers
 
 h2. What
 
