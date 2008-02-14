@@ -59,7 +59,7 @@
         onFailure: function() {
           self.error("onFailure should not be called");
         }});
-      wait(300, function() {
+      wait(100, function() {
         assert(self.completed, 'onComplete should have been called');
       });
     }},
@@ -77,7 +77,7 @@
         onFailure: function() {
           self.failed = true;
         }});
-      wait(300, function() {
+      wait(100, function() {
         assert(self.failed, 'onFailure should have been called');
       });
     }},

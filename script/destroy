@@ -10,5 +10,5 @@ end
 require 'rubigen/scripts/destroy'
 
 ARGV.shift if ['--help', '-h'].include?(ARGV[0])
-RubiGen::Base.use_component_sources! [:javascript, :newjs]
+RubiGen::Base.use_component_sources! [:javascript, :javascript_test, :newjs, :newjs_theme]
 RubiGen::Scripts::Destroy.new.run(ARGV)
