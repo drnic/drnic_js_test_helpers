@@ -79,7 +79,7 @@
           self.failed = true;
         }});
       wait(300, function() {
-        assert(self.completed, 'onComplete should have been called');
+        assert(self.failed, 'onFailure should have been called');
       });
     }},
 
