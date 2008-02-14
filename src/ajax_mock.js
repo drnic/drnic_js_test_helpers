@@ -1,3 +1,12 @@
+// Utility library to allow mocking of prototypejs Ajax.Request calls
+// within unit tests.
+// Within tests or setup, use like:
+// Ajax.Request.setupMock("/url/under/test", function(request, response) {
+//   response.responseJSON = "data";
+//   request.options.onComplete(response);
+// });
+
+
 Ajax.Request.setupMock = function(url, block) {
   Ajax.Request.MockedRequests.set(url, block);
 };
