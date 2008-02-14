@@ -108,8 +108,7 @@
   
   new Test.Unit.Runner({
     setup: function() { with(this) {
-      SimulateEvent.clicked = false;
-      SimulateEvent.changed = false;
+      SimulateEvent.lastEvent = null;
     }},
       
     // Input should have click method
