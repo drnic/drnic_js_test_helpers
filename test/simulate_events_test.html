@@ -55,10 +55,24 @@
       assert(SimulateEvent.clicked, 'input should have had onclick triggered');
     }},
 
+    // simulate mouse click - alternate api
+    testSimulateMouseClickAlternateApi: function() { with(this) {
+      assert(!SimulateEvent.clicked, 'input should not yet have had onclick triggered');
+      Event.simulateMouse('button', 'click');
+      assert(SimulateEvent.clicked, 'input should have had onclick triggered');
+    }},
+
     // Simulate select change
     testSimulateSelectChange: function() { with(this) {
       assert(!SimulateEvent.changed, 'select should not yet have had onchange triggered');
       Event.simulate('select', 'change');
+      assert(SimulateEvent.changed, 'select should have had onchange triggered');
+    }},
+
+    // Simulate select change - alternate api
+    testSimulateSelectChangeAlterateApi: function() { with(this) {
+      assert(!SimulateEvent.changed, 'select should not yet have had onchange triggered');
+      Event.simulateHtml('select', 'change');
       assert(SimulateEvent.changed, 'select should have had onchange triggered');
     }},
 

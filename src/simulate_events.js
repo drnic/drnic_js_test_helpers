@@ -39,3 +39,6 @@ Event.simulate = function(element, eventName) {
      }
   }
 }
+
+Event.simulateMouse = Event.simulate;
+Event.simulateHtml = Event.simulate;
