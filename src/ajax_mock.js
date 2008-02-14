@@ -1,3 +1,13 @@
+Ajax.Request.setupMock = function(url, block) {
+  Ajax.Request.MockedRequests.set(url, block);
+};
+
+Ajax.Request.clearMocks = function() {
+  Ajax.Request.MockedRequests = $H();
+};
+
+Ajax.Request.clearMocks();
+
 Ajax.Request.prototype.request = function(url) {
   var response = new Ajax.Response(this);
   var request  = this;
