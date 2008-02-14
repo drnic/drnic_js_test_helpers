@@ -13,17 +13,14 @@
   
   <script type="text/javascript" charset="utf-8">
     Ajax.Request.MockedRequests = $H({
-      "/working/url.json" : function(response) {
+      "/working/url.json" : function(request, response) {
         response.responseJSON = "data";
+        request.options.onComplete(response);
+      },
+      "/nonworking/url" : function(request, response) {
+        request.options.onFailure(response);
       },
     });
-    Ajax.Request.prototype.request = function(url) {
-      var response = new Ajax.Response(this);
-      Ajax.Request.MockedRequests.each(function(mock) {
-        if (url == mock[0]) mock[1](response);
-      });
-      this.options.onComplete(response);
-    };
   </script>
   
 </head>
@@ -51,19 +48,36 @@
   new Test.Unit.Runner({
     setup: function() {
       this.working_url = "/working/url.json";
+      this.nonworking_url = "/nonworking/url";
       this.completed = false;
-    },
-    
-    teardown: function() {
-      
+      this.failed = false;
     },
     
     // Ajax call should complete
     testAjaxCallShouldComplete: function() { with(this) {
       self = this;
-      new Ajax.Request(working_url, {method:"get", onComplete: function() {
-        self.completed = true;
-      }});
+      new Ajax.Request(working_url, {method:"get", 
+        onComplete: function() {
+          self.completed = true;
+        }, 
+        onFailure: function() {
+          self.error("onFailure should not be called");
+        }});
+      wait(300, function() {
+        assert(self.completed, 'onComplete should have been called');
+      });
+    }},
+
+    // AjaxCallShouldFail
+    testAjaxCallShouldFail: function() { with(this) {
+      self = this;
+      new Ajax.Request(nonworking_url, {method:"get", 
+        onComplete: function() {
+          self.error("onComplete should not be called");
+        }, 
+        onFailure: function() {
+          self.failed = true;
+        }});
       wait(300, function() {
         assert(self.completed, 'onComplete should have been called');
       });
