@@ -26,11 +26,13 @@ Event.simulate = function(element, eventName) {
                event.initEvent(eventName, "true", "true");
                break;
            case "click":
+           case "dblclick":
            case "mousedown":
            case "mousemove":
            case "mouseout":
            case "mouseover":
            case "mouseup":
+           case "contextmenu":
                event = document.createEvent("MouseEvents");
                event.initMouseEvent(eventName, true, true, window, 1, 0, 0, 0, 0, false, false, false, false, 0, null);
                break;
@@ -42,3 +44,26 @@ Event.simulate = function(element, eventName) {
 
 Event.simulateMouse = Event.simulate;
 Event.simulateHtml = Event.simulate;
+
+
+// Aliasing Element.simulateMouse(element, eventName) to element._eventName()
+(function() {
+	$w('abort blur change error focus load reset resize scroll select submit unload').
+	each(function(eventName){
+		Element.Methods['_' + eventName] = function(element) {
+			element = $(element);
+			Event.simulateHtml(element, eventName, arguments[1] || { });
+			return element;
+		}
+	});
+	
+  $w('click dblclick mousedown mousemove mouseout mouseover mouseup contextmenu').
+  each(function(eventName){
+		Element.Methods['_' + eventName] = function(element) {
+			element = $(element);
+			Event.simulateMouse(element, eventName, arguments[1] || { });
+			return element;
+		}
+	});
+	Element.addMethods();
+})()

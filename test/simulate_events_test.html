@@ -28,6 +28,7 @@
 
   <!-- Log output (one per Runner, via {testLog: "testlog"} option)-->
   <div id="testlog"></div>
+  <div id="testlog-element-helpers"></div>
   
   <!-- Put sample/test html here -->
   <div id="sample">
@@ -76,7 +77,31 @@
       assert(SimulateEvent.changed, 'select should have had onchange triggered');
     }},
 
-  }); 
+  });
+  
+  new Test.Unit.Runner({
+    setup: function() { with(this) {
+      SimulateEvent.clicked = false;
+      SimulateEvent.changed = false;
+    }},
+      
+    // Input should have click method
+    testInputShouldHaveClickMethod: function() { with(this) {
+      assert(!SimulateEvent.clicked, 'input should not yet have had onclick triggered');
+      $('button')._click();
+      assert(SimulateEvent.clicked, 'input should have had onclick triggered');
+    }},
+
+    // Select should have change method
+    testSelectShouldHaveChangeMethod: function() { with(this) {
+      assert(!SimulateEvent.changed, 'select should not yet have had onchange triggered');
+      $('select')._change();
+      assert(SimulateEvent.changed, 'select should have had onchange triggered');
+    }},
+
+    
+      
+  }, {testLog: "testlog-element-helpers"});
 // ]]>
 </script>
 </body>
