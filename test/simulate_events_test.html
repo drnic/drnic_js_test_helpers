@@ -32,12 +32,13 @@
   
   <!-- Put sample/test html here -->
   <div id="sample">
-    <input type="submit" name="button" id="button" onclick="SimulateEvent.clicked = true">
-    <select name="select" id="select" onchange="SimulateEvent.changed = true" size="1">
+    <input type="submit" name="button" id="button" onclick="SimulateEvent.lastEvent = 'click'">
+    <select name="select" id="select" onchange="SimulateEvent.lastEvent = 'change'" size="1">
       <option value="option1">option1</option>
       <option value="option2">option2</option>
       
     </select>
+    <textarea id="textarea"></textarea>
   </div>
 </div>
 
@@ -46,35 +47,61 @@
 
   new Test.Unit.Runner({
     setup: function() {
-      SimulateEvent.clicked = false;
-      SimulateEvent.changed = false;
+      SimulateEvent.lastEvent = null;
     },
     // simulate mouse click
     testSimulateMouseClick: function() { with(this) {
-      assert(!SimulateEvent.clicked, 'input should not yet have had onclick triggered');
+      assert(!SimulateEvent.lastEvent, 'input should not yet have had onclick triggered');
       Event.simulate('button', 'click');
-      assert(SimulateEvent.clicked, 'input should have had onclick triggered');
+      assertEqual('click', SimulateEvent.lastEvent, 'input should have had onclick triggered');
     }},
 
     // simulate mouse click - alternate api
     testSimulateMouseClickAlternateApi: function() { with(this) {
       assert(!SimulateEvent.clicked, 'input should not yet have had onclick triggered');
       Event.simulateMouse('button', 'click');
-      assert(SimulateEvent.clicked, 'input should have had onclick triggered');
+      assertEqual('click', SimulateEvent.lastEvent, 'input should have had onclick triggered');
     }},
 
     // Simulate select change
     testSimulateSelectChange: function() { with(this) {
       assert(!SimulateEvent.changed, 'select should not yet have had onchange triggered');
       Event.simulate('select', 'change');
-      assert(SimulateEvent.changed, 'select should have had onchange triggered');
+      assertEqual('change', SimulateEvent.lastEvent, 'select should have had onchange triggered');
     }},
 
     // Simulate select change - alternate api
     testSimulateSelectChangeAlterateApi: function() { with(this) {
       assert(!SimulateEvent.changed, 'select should not yet have had onchange triggered');
       Event.simulateHtml('select', 'change');
-      assert(SimulateEvent.changed, 'select should have had onchange triggered');
+      assertEqual('change', SimulateEvent.lastEvent, 'select should have had onchange triggered');
+    }},
+    
+    // Simulate all mouse events
+    testSimulateAllMouseEvents: function() { with(this) {
+      var events = $w('click dblclick mousedown mousemove mouseout mouseover mouseup contextmenu');
+      events.each(function(eventName) {
+        $('button')['on' + eventName] = function() {
+          SimulateEvent.lastEvent = eventName;
+        };
+        Event.simulate('button', eventName);
+        assertEqual(eventName, SimulateEvent.lastEvent, 
+          'input should have had on' + eventName + ' triggered');
+      });
+    }},
+
+    // Simulate all HTML events
+    testSimulateAllHTMLEvents: function() { with(this) {
+      // TODO  resize (window) + scroll
+      var events = $w('blur change error focus load reset select submit unload');
+      events.each(function(eventName) {
+        $('textarea')['on' + eventName] = function() {
+          SimulateEvent.lastEvent = eventName;
+        };
+        Event.simulate('textarea', eventName);
+        assertEqual(eventName, SimulateEvent.lastEvent, 
+          'textarea should have had on' + eventName + ' triggered');
+      });
     }},
 
   });
@@ -89,18 +116,16 @@
     testInputShouldHaveClickMethod: function() { with(this) {
       assert(!SimulateEvent.clicked, 'input should not yet have had onclick triggered');
       $('button')._click();
-      assert(SimulateEvent.clicked, 'input should have had onclick triggered');
+      assertEqual('click', SimulateEvent.lastEvent, 'input should have had onclick triggered');
     }},
 
     // Select should have change method
     testSelectShouldHaveChangeMethod: function() { with(this) {
       assert(!SimulateEvent.changed, 'select should not yet have had onchange triggered');
       $('select')._change();
-      assert(SimulateEvent.changed, 'select should have had onchange triggered');
+      assertEqual('change', SimulateEvent.lastEvent, 'select should have had onchange triggered');
     }},
 
-    
-      
   }, {testLog: "testlog-element-helpers"});
 // ]]>
 </script>
