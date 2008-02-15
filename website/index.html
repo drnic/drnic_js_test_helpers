@@ -86,7 +86,24 @@ of each <span class="caps">HTML</span> test file add:
 	<h3>Event simulation</h3>
 
 
+<pre>Event.simulate('element', 'eventName')</pre>
+
 	<h3>Ajax request mocking</h3>
+
+
+<code>Ajax.Request</code> mocking (for <a href="http://www.prototypejs.org/">Prototypejs</a> based projects)
+
+	<p>Within your test or setup method:</p>
+
+
+<pre>Ajax.Request.setupMock('/some/url', function(request, response) {
+  response.responseJSON = "{data: 123}";
+  request.options.onComplete(response);
+});</pre>
+
+	<p>Now, during your test if <code>new Ajax.Request('/some/url', {onComplete: function() {...}})</code> 
+is called, then the <code>onComplete</code> callback will be invoked, 
+and <code>responseJSON</code> will have a mocked out value.</p>
 
 
 	<h2>Forum</h2>
