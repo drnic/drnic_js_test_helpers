@@ -12,7 +12,7 @@ require 'rake/packagetask'
 
 $:.unshift File.dirname(__FILE__) + "/lib"
 
-APP_VERSION  = '0.0.5'
+APP_VERSION  = '0.5.0'
 APP_NAME     = 'drnic_js_test_helpers'
 RUBYFORGE_PROJECT = 'drnicutilities'
 APP_FILE_NAME= "#{APP_NAME}.js"
@@ -21,6 +21,8 @@ APP_ROOT     = File.expand_path(File.dirname(__FILE__))
 APP_SRC_DIR  = File.join(APP_ROOT, 'src')
 APP_DIST_DIR = File.join(APP_ROOT, 'dist')
 APP_PKG_DIR  = File.join(APP_ROOT, 'pkg')
+
+
 unless ENV['rakefile_just_config']
 
 task :default => [:dist, :package, :clean_package_source]
