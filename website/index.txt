@@ -6,6 +6,7 @@ This JavaScript project provides help for unit testing other JavaScript projects
 
 * <code>Event.simulate('element', 'eventName')</code>
 * <code>Ajax.Request</code> mocking (for "Prototypejs":http://www.prototypejs.org/ based projects)
+* Extra test case assertions (assertDifference, assertNoDifference)
 
 h2. Downloading
 
@@ -23,7 +24,7 @@ files are in <code>test/</code> and the library is saved at
 <code>test/assets/drnic_js_test_helpers.js</code>, then within the &lt;head&gt;
 of each HTML test file add:
 
-<pre>
+<pre syntax="html">
 <script src="assets/drnic_js_test_helpers.js" type="text/javascript"></script>  
 </pre>
 
@@ -36,7 +37,7 @@ This library currently offers two helpers:
 
 h3. Event simulation
 
-<pre>Event.simulate('element', 'eventName')</pre>
+<pre syntax="javascript">Event.simulate('element', 'eventName')</pre>
 
 
 h3. Ajax request mocking
@@ -45,7 +46,7 @@ h3. Ajax request mocking
 
 Within your test or setup method:
 
-<pre>Ajax.Request.setupMock('/some/url', function(request, response) {
+<pre syntax="javascript">Ajax.Request.setupMock('/some/url', function(request, response) {
   response.responseJSON = "{data: 123}";
   request.options.onComplete(response);
 });</pre>
@@ -53,6 +54,24 @@ Within your test or setup method:
 Now, during your test if <code>new Ajax.Request('/some/url', {onComplete: function() {...}})</code> 
 is called, then the <code>onComplete</code> callback will be invoked, 
 and <code>responseJSON</code> will have a mocked out value.
+
+h3. Extra assertions
+
+Your test cases can use the following additional assertions:
+  
+* <code>assertDifference(evalStr, block, count=1, msg)</code>
+* <code>assertNoDifference(evalStr, block, msg)</code> - same as <code>assertDifference(evalStr, block, 0)</code>
+
+For example, if you wanted to test that some code created an additional &gt;div&lt; element
+in the DOM, then your test might be:
+
+<pre syntax="javascript">
+testExtraDiv: function() { with(this) {
+  assertDifference("$$('div').length", function() {
+    // do something that creates new <div> element
+  }, 1, "should not be different");
+}},
+</pre>
 
 h2. Forum
 
