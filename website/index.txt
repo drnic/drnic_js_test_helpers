@@ -36,11 +36,23 @@ This library currently offers two helpers:
 
 h3. Event simulation
 
+<pre>Event.simulate('element', 'eventName')</pre>
 
 
 h3. Ajax request mocking
 
+<code>Ajax.Request</code> mocking (for "Prototypejs":http://www.prototypejs.org/ based projects)
 
+Within your test or setup method:
+
+<pre>Ajax.Request.setupMock('/some/url', function(request, response) {
+  response.responseJSON = "{data: 123}";
+  request.options.onComplete(response);
+});</pre>
+
+Now, during your test if <code>new Ajax.Request('/some/url', {onComplete: function() {...}})</code> 
+is called, then the <code>onComplete</code> callback will be invoked, 
+and <code>responseJSON</code> will have a mocked out value.
 
 h2. Forum
 
