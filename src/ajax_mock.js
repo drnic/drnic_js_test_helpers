@@ -17,11 +17,18 @@ Ajax.Request.clearMocks = function() {
 
 Ajax.Request.clearMocks();
 
+Ajax.Request.prototype.requestOrig = Ajax.Request.prototype.request;
 Ajax.Request.prototype.request = function(url) {
   var response = new Ajax.Response(this);
   var request  = this;
+  var found    = false;
   Ajax.Request.MockedRequests.each(function(mock) {
-    if (url == mock[0]) mock[1](request, response);
+    if (!found && url == mock[0]) {
+      mock[1](request, response);
+      found = true;
+    }
   });
-  // this.options.onComplete(response);
+  if (!found) {
+    return this.requestOrig(url);
+  }
 };
