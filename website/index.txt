@@ -9,20 +9,43 @@ This JavaScript project provides help for unit testing other JavaScript projects
 
 h2. Downloading
 
-TODO - where to download the library file?
+The get the latest version of <code>drnic_js_test_helpers.js</code>,
+go to the "downloads":http://rubyforge.org/frs/?group_id=2351&release_id=19240
+page on rubyforge.org, or by clicking on "Get Version" badge above and clicking
+through to "drnic_js_test_helpers".
 
-h2. The basics
+Save the file within your JavaScript project, say in <code>test/assets</code>.
 
+h2. Setup/installation
+
+This library is for use within unittest.js related HTML test files. If your test HTML
+files are in <code>test/</code> and the library is saved at
+<code>test/assets/drnic_js_test_helpers.js</code>, then within the &lt;head&gt;
+of each HTML test file add:
+
+<pre>
+<script src="assets/drnic_js_test_helpers.js" type="text/javascript"></script>  
+</pre>
 
 h2. Demonstration of usage
+
+This library currently offers two helpers:
+
+* Event simulation - simulating mouse events (click, mouseover, etc), or HTML events (change, etc)
+* Ajax request mocking - no Ajax requests available during unit testing, so mock them out
+
+h3. Event simulation
+
+
+
+h3. Ajax request mocking
 
 
 
 h2. Forum
 
-"http://groups.google.com/group/drnic_js_test_helpers":http://groups.google.com/group/drnic_js_test_helpers
+"http://groups.google.com/group/drnicutilities":http://groups.google.com/group/drnicutilities
 
-TODO - create Google Group - drnic_js_test_helpers
 
 h2. How to submit patches
 
@@ -36,5 +59,5 @@ This code is free to use under the terms of the MIT license.
 
 h2. Contact
 
-Comments are welcome. Send an email to "Dr Nic Williams":mailto:drnicwilliams@gmail.com via the "forum":http://groups.google.com/group/drnic_js_test_helpers
+Comments are welcome. Send an email to "Dr Nic Williams":mailto:drnicwilliams@gmail.com via the "forum":http://groups.google.com/group/drnicutilities
 
