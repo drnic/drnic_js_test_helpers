@@ -17,6 +17,7 @@ APP_SRC_DIR  = File.join(APP_ROOT, 'src')
 APP_DIST_DIR = File.join(APP_ROOT, 'dist')
 APP_PKG_DIR  = File.join(APP_ROOT, 'pkg')
 APP_VERSION  = '0.0.1'
+unless ENV['rakefile_just_config']
 
 task :default => [:dist, :package, :clean_package_source]
 
@@ -80,3 +81,5 @@ task :clean_package_source do
 end
 
 Dir['tasks/**/*.rake'].each { |rake| load rake }
+
+end
