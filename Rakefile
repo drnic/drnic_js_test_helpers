@@ -12,11 +12,15 @@ require 'rake/packagetask'
 
 $:.unshift File.dirname(__FILE__) + "/lib"
 
+APP_VERSION  = '0.0.5'
+APP_NAME     = 'drnic_js_test_helpers'
+RUBYFORGE_PROJECT = 'drnicutilities'
+APP_FILE_NAME= "#{APP_NAME}.js"
+
 APP_ROOT     = File.expand_path(File.dirname(__FILE__))
 APP_SRC_DIR  = File.join(APP_ROOT, 'src')
 APP_DIST_DIR = File.join(APP_ROOT, 'dist')
 APP_PKG_DIR  = File.join(APP_ROOT, 'pkg')
-APP_VERSION  = '0.0.1'
 unless ENV['rakefile_just_config']
 
 task :default => [:dist, :package, :clean_package_source]
@@ -29,19 +33,22 @@ task :dist do
   FileUtils.mkdir_p APP_DIST_DIR
   
   Dir.chdir(APP_SRC_DIR) do
-    File.open(File.join(APP_DIST_DIR, 'drnic_js_test_helpers.js'), 'w+') do |dist|
-      dist << Protodoc::Preprocessor.new('drnic_js_test_helpers.js')
+    File.open(File.join(APP_DIST_DIR, APP_FILE_NAME), 'w+') do |dist|
+      dist << Protodoc::Preprocessor.new(APP_FILE_NAME)
     end
+  end
+  Dir.chdir(APP_DIST_DIR) do
+    FileUtils.copy_file APP_FILE_NAME, "#{APP_NAME}-#{APP_VERSION}.js"
   end
 end
 
-Rake::PackageTask.new('drnic_js_test_helpers', APP_VERSION) do |package|
+Rake::PackageTask.new(APP_NAME, APP_VERSION) do |package|
   package.need_tar_gz = true
   package.package_dir = APP_PKG_DIR
   package.package_files.include(
     '[A-Z]*',
     'config/*.sample',
-    'dist/drnic_js_test_helpers.js',
+    "dist/#{APP_FILE_NAME}",
     'lib/**',
     'src/**',
     'script/**',
@@ -77,7 +84,7 @@ JavaScriptTestTask.new(:test_units) do |t|
 end
 
 task :clean_package_source do
-  rm_rf File.join(APP_PKG_DIR, "'drnic_js_test_helpers'-#{APP_VERSION}")
+  rm_rf File.join(APP_PKG_DIR, "#{APP_NAME}-#{APP_VERSION}")
 end
 
 Dir['tasks/**/*.rake'].each { |rake| load rake }
