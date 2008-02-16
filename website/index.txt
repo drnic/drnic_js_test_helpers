@@ -30,10 +30,11 @@ of each HTML test file add:
 
 h2. Demonstration of usage
 
-This library currently offers two helpers:
+This library currently offers some helpers:
 
 * Event simulation - simulating mouse events (click, mouseover, etc), or HTML events (change, etc)
 * Ajax request mocking - no Ajax requests available during unit testing, so mock them out
+* Extra test assertions - bonus assertXXX methods for unittest.js
 
 h3. Event simulation
 
