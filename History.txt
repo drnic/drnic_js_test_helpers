@@ -1,3 +1,5 @@
+* ajaxMock: user Ajax.Request.prepareMocks/clearMocks in setup/teardown respectively
+
 == 0.6.0 2008-02-16
 
 * Added assertDifference/assertNoDifference to test cases
