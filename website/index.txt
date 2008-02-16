@@ -44,6 +44,22 @@ h3. Ajax request mocking
 
 <code>Ajax.Request</code> mocking (for "Prototypejs":http://www.prototypejs.org/ based projects)
 
+Within your setup + teardown methods:
+
+<pre syntax="javascript">setup: function() {
+  Ajax.Request.prepareMocks();
+},
+
+teardown: function() {
+  Ajax.Request.clearMocks();
+},
+</pre>
+
+The <code>clearMocks</code> call is to restore the Ajax mechanism; which is used
+when you run tests via <code>rake test</code> to communicate the test results back
+to the command-line test server. If <code>rake test</code> is hanging, it is 
+likely you are not calling <code>clearMocks</code> in your teardown method.
+
 Within your test or setup method:
 
 <pre syntax="javascript">Ajax.Request.setupMock('/some/url', function(request, response) {
