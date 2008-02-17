@@ -79,7 +79,8 @@
     
     // Simulate all mouse events
     testSimulateAllMouseEvents: function() { with(this) {
-      var events = $w('click dblclick mousedown mousemove mouseout mouseover mouseup contextmenu');
+      // TODO - possibly contextmenu
+      var events = $w('click dblclick mousedown mousemove mouseout mouseover mouseup');
       events.each(function(eventName) {
         $('button')['on' + eventName] = function() {
           SimulateEvent.lastEvent = eventName;

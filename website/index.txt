@@ -90,6 +90,10 @@ testExtraDiv: function() { with(this) {
 }},
 </pre>
 
+h2. Other test helpers
+
+The protolicious source has some helper files, see "source":http://code.google.com/p/protolicious/source/browse/trunk/
+
 h2. Forum
 
 "http://groups.google.com/group/drnicutilities":http://groups.google.com/group/drnicutilities
