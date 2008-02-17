@@ -1,4 +1,8 @@
+== 0.7.0 2008-02-16
+
 * ajaxMock: user Ajax.Request.prepareMocks/clearMocks in setup/teardown respectively
+* Improved Event.simulate [thx Juriy Zaytsev]
+* Moved test/*.html -> test/unit/*.html as per newjs 1.1.0
 
 == 0.6.0 2008-02-16
 
