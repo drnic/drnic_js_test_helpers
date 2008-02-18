@@ -6,6 +6,8 @@
 //   request.options.onComplete(response);
 // });
 
+var Ajax = Ajax || {};
+Ajax.Request = Ajax.Request || {};
 
 Ajax.Request.setupMock = function(url, block) {
   Ajax.Request.MockedRequests.set(url, block);
