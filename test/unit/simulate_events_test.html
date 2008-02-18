@@ -79,37 +79,31 @@
     // Simulate all mouse events
     testSimulateAllMouseEvents: function() { with(this) {
       // TODO - possibly contextmenu
-      if (typeof Prototype != "undefined") {
-        var events = $w('click dblclick mousedown mousemove mouseout mouseover mouseup');
-        events.each(function(eventName) {
-          $('button')['on' + eventName] = function() {
-            SimulateEvent.lastEvent = eventName;
-          };
-          Event.simulate('button', eventName);
-          assertEqual(eventName, SimulateEvent.lastEvent, 
-            'input should have had on' + eventName + ' triggered');
-        });
-      } else {
-        info("Only for prototype")
-      }
+      var events = ['click', 'dblclick', 'mousedown', 'mousemove', 'mouseout', 'mouseover', 'mouseup'];
+      for (var i=0; i < events.length; i++) {
+        var eventName = events[i];
+        DrNicTest.$('button')['on' + eventName] = function() {
+          SimulateEvent.lastEvent = eventName;
+        };
+        Event.simulate('button', eventName);
+        assertEqual(eventName, SimulateEvent.lastEvent, 
+          'input should have had on' + eventName + ' triggered');
+      };
     }},
 
     // Simulate all HTML events
     testSimulateAllHTMLEvents: function() { with(this) {
       // TODO  resize (window) + scroll
-      if (typeof Prototype != "undefined") {
-        var events = $w('blur change error focus load reset select submit unload');
-        events.each(function(eventName) {
-          $('textarea')['on' + eventName] = function() {
-            SimulateEvent.lastEvent = eventName;
-          };
-          Event.simulate('textarea', eventName);
-          assertEqual(eventName, SimulateEvent.lastEvent, 
-            'textarea should have had on' + eventName + ' triggered');
-        });
-      } else {
-        info("Only for prototype")
-      }
+      var events = ['blur', 'change', 'error', 'focus', 'load', 'reset', 'select', 'submit', 'unload'];
+      for (var i=0; i < events.length; i++) {
+        var eventName = events[i];
+        DrNicTest.$('textarea')['on' + eventName] = function() {
+          SimulateEvent.lastEvent = eventName;
+        };
+        Event.simulate('textarea', eventName);
+        assertEqual(eventName, SimulateEvent.lastEvent, 
+          'textarea should have had on' + eventName + ' triggered');
+      };
     }},
 
   });
@@ -121,16 +115,24 @@
       
     // Input should have click method
     testInputShouldHaveClickMethod: function() { with(this) {
-      assert(!SimulateEvent.clicked, 'input should not yet have had onclick triggered');
-      $('button')._click();
-      assertEqual('click', SimulateEvent.lastEvent, 'input should have had onclick triggered');
+      if (typeof Prototype != "undefined") {
+        assert(!SimulateEvent.clicked, 'input should not yet have had onclick triggered');
+        $('button')._click();
+        assertEqual('click', SimulateEvent.lastEvent, 'input should have had onclick triggered');
+      } else {
+        info("Only for prototype")
+      }
     }},
 
     // Select should have change method
     testSelectShouldHaveChangeMethod: function() { with(this) {
-      assert(!SimulateEvent.changed, 'select should not yet have had onchange triggered');
-      $('select')._change();
-      assertEqual('change', SimulateEvent.lastEvent, 'select should have had onchange triggered');
+      if (typeof Prototype != "undefined") {
+        assert(!SimulateEvent.changed, 'select should not yet have had onchange triggered');
+        $('select')._change();
+        assertEqual('change', SimulateEvent.lastEvent, 'select should have had onchange triggered');
+      } else {
+        info("Only for prototype")
+      }
     }},
 
   }, {testLog: "testlog-element-helpers"});

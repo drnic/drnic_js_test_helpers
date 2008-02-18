@@ -57,23 +57,25 @@ Event.simulateHtml = Event.simulate;
 
 
 // Aliasing Element.simulateMouse(element, eventName) to element._eventName()
-(function() {
-	$w('abort blur change error focus load reset resize scroll select submit unload').
-	each(function(eventName){
-		Element.Methods['_' + eventName] = function(element) {
-			element = $(element);
-			Event.simulateHtml(element, eventName, arguments[1] || { });
-			return element;
-		}
-	});
+if (typeof Prototype != "undefined") {
+  (function() {
+  	$w('abort blur change error focus load reset resize scroll select submit unload').
+  	each(function(eventName){
+  		Element.Methods['_' + eventName] = function(element) {
+  			element = $(element);
+  			Event.simulateHtml(element, eventName, arguments[1] || { });
+  			return element;
+  		}
+  	});
 	
-  $w('click dblclick mousedown mousemove mouseout mouseover mouseup contextmenu').
-  each(function(eventName){
-		Element.Methods['_' + eventName] = function(element) {
-			element = $(element);
-			Event.simulateMouse(element, eventName, arguments[1] || { });
-			return element;
-		}
-	});
-	Element.addMethods();
-})()
+    $w('click dblclick mousedown mousemove mouseout mouseover mouseup contextmenu').
+    each(function(eventName){
+  		Element.Methods['_' + eventName] = function(element) {
+  			element = $(element);
+  			Event.simulateMouse(element, eventName, arguments[1] || { });
+  			return element;
+  		}
+  	});
+  	Element.addMethods();
+  })()
+}
