@@ -48,6 +48,17 @@
         // do nothing
       }, "should not be different");
     }},
+    
+    // tag difference
+    testTagDifference: function() { with(this) {
+      assertTagDifference('span', function() {
+        var span = document.createElement("span");
+        Test.$('sample').appendChild(span);
+      }, 1);
+      
+    }},
+
+    
   }, {testLog: "testlog"}); 
   // For each Test.UnitRunner instance, specify the element id where results will be
   // published; e.g. <div id="testlog"/> above.

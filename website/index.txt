@@ -76,8 +76,9 @@ h3. Extra assertions
 
 Your test cases can use the following additional assertions:
   
-* <code>assertDifference(evalStr, block, count=1, msg)</code>
-* <code>assertNoDifference(evalStr, block, msg)</code> - same as <code>assertDifference(evalStr, block, 0)</code>
+* <code>assertDifference(evalStr, block, count)</code>
+* <code>assertNoDifference(evalStr, block)</code> - same as <code>assertDifference(evalStr, block, 0)</code>
+* <code>assertTagDifference(tag, block, count)</code>
 
 For example, if you wanted to test that some code created an additional &gt;div&lt; element
 in the DOM, then your test might be:
@@ -89,6 +90,13 @@ testExtraDiv: function() { with(this) {
   }, 1, "should not be different");
 }},
 </pre>
+
+There is a primitive selector assertion <code>assertTagDifference</code>:
+  
+<pre syntax="javascript">assertTagDifference('span', function() {
+  var span = document.createElement("span");
+  Test.$('sample').appendChild(span);
+}, 1);</pre>
 
 h2. Other test helpers
 
