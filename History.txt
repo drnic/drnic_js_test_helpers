@@ -1,3 +1,5 @@
+* upgraded jsunittest to 0.6.1 for ajax bug for test runner
+
 == 0.7.1 2008-02-18
 
 * assertions: assertTagDifference
