@@ -33,7 +33,7 @@
     <h1>Dr Nic&#8217;s JavaScript Test Helpers</h1>
     <div id="version" class="clickable" onclick='document.location = "http://rubyforge.org/projects/drnicutilities"; return false'>
       <p>Get Version</p>
-      <a href="http://rubyforge.org/projects/drnicutilities" class="numbers">0.6.0</a>
+      <a href="http://rubyforge.org/projects/drnicutilities" class="numbers">0.7.1</a>
     </div>
     <h2>What</h2>
 
@@ -137,8 +137,9 @@ and <code>responseJSON</code> will have a mocked out value.</p>
 
 
 	<ul>
-	<li><code>assertDifference(evalStr, block, count=1, msg)</code></li>
-		<li><code>assertNoDifference(evalStr, block, msg)</code> &#8211; same as <code>assertDifference(evalStr, block, 0)</code></li>
+	<li><code>assertDifference(evalStr, block, count)</code></li>
+		<li><code>assertNoDifference(evalStr, block)</code> &#8211; same as <code>assertDifference(evalStr, block, 0)</code></li>
+		<li><code>assertTagDifference(tag, block, count)</code></li>
 	</ul>
 
 
@@ -153,6 +154,21 @@ testExtraDiv: function() { with(this) {
   }, 1, &quot;should not be different&quot;);
 }},
 </pre></p>
+
+
+	<p>There is a primitive selector assertion <code>assertTagDifference</code>:</p>
+
+
+	<p><pre class='syntax'>assertTagDifference('span', function() {
+  var span = document.createElement(&quot;span&quot;);
+  Test.$('sample').appendChild(span);
+}, 1);</pre></p>
+
+
+	<h2>Other test helpers</h2>
+
+
+	<p>The protolicious source has some helper files, see <a href="http://code.google.com/p/protolicious/source/browse/trunk/">source</a></p>
 
 
 	<h2>Forum</h2>
@@ -181,7 +197,7 @@ testExtraDiv: function() { with(this) {
 
 	<p>Comments are welcome. Send an email to <a href="mailto:drnicwilliams@gmail.com">Dr Nic Williams</a> via the <a href="http://groups.google.com/group/drnicutilities">forum</a></p>
     <p class="coda">
-      <a href="http://drnicwilliams.com">Dr Nic Williams</a>, 17th February 2008<br>
+      <a href="http://drnicwilliams.com">Dr Nic Williams</a>, 18th February 2008<br>
       Theme extended from <a href="http://rb2js.rubyforge.org/">Paul Battley</a>
     </p>
 </div>
