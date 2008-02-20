@@ -10,12 +10,14 @@ This JavaScript project provides help for unit testing other JavaScript projects
 
 h2. Downloading
 
-The get the latest version of <code>drnic_js_test_helpers.js</code>,
-go to the "downloads":http://rubyforge.org/frs/?group_id=2351&release_id=19240
+Latest version: <a href="dist/drnic_js_test_helpers.js">drnic_js_test_helpers.js</a>
+
+Alternately, to get the complete project source go to the "downloads":http://rubyforge.org/frs/?group_id=2351&release_id=19240
 page on rubyforge.org, or by clicking on "Get Version" badge above and clicking
 through to "drnic_js_test_helpers".
 
-Save the file within your JavaScript project, say in <code>test/assets</code>.
+Save the file within your JavaScript project, say in <code>test/assets</code>,
+and link to it from your HTML test files.
 
 h2. Setup/installation
 
@@ -45,22 +47,6 @@ h3. Ajax request mocking
 
 <code>Ajax.Request</code> mocking (for "Prototypejs":http://www.prototypejs.org/ based projects)
 
-Within your setup + teardown methods:
-
-<pre syntax="javascript">setup: function() {
-  Ajax.Request.prepareMocks();
-},
-
-teardown: function() {
-  Ajax.Request.clearMocks();
-},
-</pre>
-
-The <code>clearMocks</code> call is to restore the Ajax mechanism; which is used
-when you run tests via <code>rake test</code> to communicate the test results back
-to the command-line test server. If <code>rake test</code> is hanging, it is 
-likely you are not calling <code>clearMocks</code> in your teardown method.
-
 Within your test or setup method:
 
 <pre syntax="javascript">Ajax.Request.setupMock('/some/url', function(request, response) {
@@ -71,6 +57,18 @@ Within your test or setup method:
 Now, during your test if <code>new Ajax.Request('/some/url', {onComplete: function() {...}})</code> 
 is called, then the <code>onComplete</code> callback will be invoked, 
 and <code>responseJSON</code> will have a mocked out value.
+
+Within your teardown method it is advisable to clear the mocks, thus each test needs to setup the mock it requires:
+
+<pre>teardown: function() {
+  Ajax.Request.clearMocks();
+},
+</pre>
+
+The <code>clearMocks</code> call is to restore the Ajax mechanism; which is used
+when you run tests via <code>rake test</code> to communicate the test results back
+to the command-line test server. If <code>rake test</code> is hanging, it is 
+likely you are not calling <code>clearMocks</code> in your teardown method.
 
 h3. Extra assertions
 
