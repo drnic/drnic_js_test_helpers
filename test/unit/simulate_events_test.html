@@ -76,6 +76,16 @@
       assertEqual('change', SimulateEvent.lastEvent, 'select should have had onchange triggered');
     }},
     
+    // Simulate change on DOM object
+    testSimulateChangeOnDOMObject: function() { with(this) {
+      assert(!SimulateEvent.changed, 'select should not yet have had onchange triggered');
+      var element = Test.$('select');
+      Event.simulate(element, 'change');
+      assertEqual('change', SimulateEvent.lastEvent, 'select should have had onchange triggered');
+    }},
+
+    
+    
     // Simulate all mouse events
     testSimulateAllMouseEvents: function() { with(this) {
       // TODO - possibly contextmenu
