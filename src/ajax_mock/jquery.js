@@ -2,7 +2,7 @@
 // within unit tests.
 // Within tests or setup, use like:
 // Test.Ajax.setupMock("/url/under/test", function(request, response) {
-//   response.val = "data";
+//   response = "data";
 //   request.complete(response);
 // });
 var Test = Test || {};
