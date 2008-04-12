@@ -5,31 +5,33 @@
 //   response.responseJSON = "data";
 //   request.options.onComplete(response);
 // });
+var Test = Test || {};
 if (typeof Prototype != "undefined") {
+  Test.Ajax = Test.Ajax || {};
 
-  Ajax.Request.setupMock = function(url, block) {
-    Ajax.Request.prepareMocks();
-    Ajax.Request.MockedRequests.set(url, block);
+  Test.Ajax.setupMock = function(url, block) {
+    Test.Ajax.prepareMocks();
+    Test.Ajax.MockedRequests.set(url, block);
   };
 
-  Ajax.Request.clearMocks = function() {
-    Ajax.Request.MockedRequests = $H();
+  Test.Ajax.clearMocks = function() {
+    Test.Ajax.MockedRequests = $H();
     if (Ajax.Request.prototype.requestOrig) {
       Ajax.Request.prototype.request = Ajax.Request.prototype.requestOrig;
       Ajax.Request.prototype.requestOrig = null;
     }
   };
 
-  Ajax.Request.clearMocks();
+  Test.Ajax.clearMocks();
 
-  Ajax.Request.prepareMocks = function() {
+  Test.Ajax.prepareMocks = function() {
     if (!Ajax.Request.prototype.requestOrig) {
       Ajax.Request.prototype.requestOrig = Ajax.Request.prototype.request;
       Ajax.Request.prototype.request = function(url) {
         var response = new Ajax.Response(this);
         var request  = this;
         var found    = false;
-        Ajax.Request.MockedRequests.each(function(mock) {
+        Test.Ajax.MockedRequests.each(function(mock) {
           if (!found && url == mock[0]) {
             mock[1](request, response);
             found = true;

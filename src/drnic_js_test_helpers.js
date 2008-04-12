@@ -5,4 +5,5 @@ DrNic.JsTestHelpers = {
   Version: '<%= APP_VERSION %>',
 };
 
-<%= include 'simulate_events.js', 'ajax_mock.js', 'assertions.js' %>
+<%= include 'simulate_events.js', 'assertions.js' %>
+<%= include 'ajax_mock/prototype.js', 'ajax_mock/jquery.js' %>

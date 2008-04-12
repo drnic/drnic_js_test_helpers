@@ -1,3 +1,6 @@
+== 0.8.0 2008-04-13
+
+* jQuery.ajax mocking
 * upgraded jsunittest to 0.6.1 for ajax bug for test runner
 
 == 0.7.1 2008-02-18

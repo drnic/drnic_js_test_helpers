@@ -4,13 +4,13 @@
 <head>
   <title>JavaScript unit test file</title>
   <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-  <script src="../assets/prototype.js" type="text/javascript"></script>
+  <script src="../assets/jquery.min.js" type="text/javascript"></script>
   <script src="../assets/jsunittest.js" type="text/javascript"></script>
 
-  <script src="../../src/ajax_mock/prototype.js" type="text/javascript"></script>
-  
+  <script src="../../src/ajax_mock/jquery.js" type="text/javascript"></script>
+
   <link rel="stylesheet" href="../assets/unittest.css" type="text/css" />
-  
+
 </head>
 <body>
 
@@ -25,7 +25,7 @@
 
   <!-- Log output (one per Runner, via {testLog: "testlog"} option)-->
   <div id="testlog"></div>
-  
+
   <!-- Put sample/test html here -->
   <div id="sample"></div>
 </div>
@@ -41,23 +41,26 @@
       this.completed = false;
       this.failed = false;
     },
-    
+
     teardown: function() {
       Test.Ajax.clearMocks();
     },
-    
+
+
     // Ajax call should complete
     testAjaxCallShouldComplete: function() { with(this) {
       self = this;
       Test.Ajax.setupMock(working_url, function(request, response) {
         response.responseJSON = "data";
-        request.options.onComplete(response);
+        request.complete(response);
       });
-      new Ajax.Request(working_url, {method:"get", 
-        onComplete: function() {
+      $.ajax({
+        url: working_url,
+        type: "get",
+        complete: function() {
           self.completed = true;
-        }, 
-        onFailure: function() {
+        },
+        error: function() {
           self.error("onFailure should not be called");
         }});
       wait(100, function() {
@@ -69,21 +72,24 @@
     testAjaxCallShouldFail: function() { with(this) {
       self = this;
       Test.Ajax.setupMock(nonworking_url, function(request, response) {
-        request.options.onFailure(response);
+        request.error(response);
       })
-      new Ajax.Request(nonworking_url, {method:"get", 
-        onComplete: function() {
+      $.ajax({
+        url: nonworking_url,
+        type: "get",
+        completed: function() {
           self.error("onComplete should not be called");
-        }, 
-        onFailure: function() {
+        },
+        error: function() {
           self.failed = true;
-        }});
+        }
+      });
       wait(100, function() {
         assert(self.failed, 'onFailure should have been called');
       });
     }},
 
-  }); 
+  });
 // ]]>
 </script>
 </body>
