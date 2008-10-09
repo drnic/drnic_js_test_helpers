@@ -88,7 +88,22 @@
         assert(self.failed, 'onFailure should have been called');
       });
     }},
+    
+    "test that only on ajax callback invoked if multiple mocks": function() { with(this) {
+      var one_called = false;
+      var two_called = false;
+      Test.Ajax.setupMock("/one", function(request, response) {
+        one_called = true;
+      });
+      Test.Ajax.setupMock("/two", function(request, response) {
+        two_called = true;
+      });
+      $.get('/two');
+      assert(!one_called, '/one should not be invoked');
+      assert(two_called);
+    }},
 
+    
   });
 // ]]>
 </script>

@@ -30,18 +30,15 @@ if (typeof jQuery != "undefined") {
         $.ajaxOrig = $.ajax;
         $.ajax = function(options) {
           var response = {};
-          var found    = false;
-          for (var url in Test.Ajax.MockedRequests) {
-            var mock = Test.Ajax.MockedRequests[url];
-            if (!found && mock) {
-              mock(options, response);
-              found = true;
-            }
-          };
-          if (!found) {
+          var mock = Test.Ajax.MockedRequests[options];
+          if (!mock) {
+            mock = Test.Ajax.MockedRequests[options.url];
+          }
+          if (mock) {
+            mock(options, response);
+          } else {
             return $.ajaxOrig(options);
           }
-          
         };
       }
     };

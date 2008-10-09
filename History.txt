@@ -1,3 +1,7 @@
+== 0.8.1 2008-10-09
+
+* jQuery's Test.Ajax only invokes the mocked url, not all urls that were mocked
+
 == 0.8.0 2008-04-13
 
 * jQuery.ajax mocking
