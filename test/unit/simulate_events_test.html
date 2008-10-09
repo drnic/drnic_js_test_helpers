@@ -92,7 +92,7 @@
       var events = ['click', 'dblclick', 'mousedown', 'mousemove', 'mouseout', 'mouseover', 'mouseup'];
       for (var i=0; i < events.length; i++) {
         var eventName = events[i];
-        DrNicTest.$('button')['on' + eventName] = function() {
+        Test.$('button')['on' + eventName] = function() {
           SimulateEvent.lastEvent = eventName;
         };
         Event.simulate('button', eventName);
@@ -107,7 +107,7 @@
       var events = ['blur', 'change', 'error', 'focus', 'load', 'reset', 'select', 'submit', 'unload'];
       for (var i=0; i < events.length; i++) {
         var eventName = events[i];
-        DrNicTest.$('textarea')['on' + eventName] = function() {
+        Test.$('textarea')['on' + eventName] = function() {
           SimulateEvent.lastEvent = eventName;
         };
         Event.simulate('textarea', eventName);
